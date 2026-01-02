@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icecast>
+  <location>Local</location>
+  <admin>admin@example.com</admin>
+  <limits>
+    <clients>100</clients>
+    <sources>2</sources>
+    <threadpool>5</threadpool>
+    <queue-size>524288</queue-size>
+    <client-timeout>30</client-timeout>
+    <header-timeout>15</header-timeout>
+    <source-timeout>10</source-timeout>
+  </limits>
+  <authentication>
+    <source-password>hackme</source-password>
+    <admin-user>admin</admin-user>
+    <admin-password>hackme</admin-password>
+  </authentication>
+  <hostname>0.0.0.0</hostname>
+  <listen-socket>
+    <port>8000</port>
+  </listen-socket>
+  <mount>
+    <mount-name>/mystream.mp3</mount-name>
+    <username>source</username>
+    <password>hackme</password>
+  </mount>
+</icecast>

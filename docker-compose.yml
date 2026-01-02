@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  icecast:
+    image: linuxserver/icecast:latest
+    container_name: icecast
+    environment:
+      PUID: '1000'
+      PGID: '1000'
+      TZ: UTC
+      ICECAST_SOURCE_PASSWORD: hackme
+      ICECAST_ADMIN_USERNAME: admin
+      ICECAST_ADMIN_PASSWORD: hackme
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./icecast/config:/config
+    restart: unless-stopped
+
+  streamer:
+    build: ./streamer
+    container_name: streamer
+    volumes:
+      - music:/tmp/music
+    depends_on:
+      - icecast
+    restart: unless-stopped
+
+  snapclient:
+    image: riemerk/mr-do-snapclient:latest
+    container_name: snapclient
+    restart: unless-stopped
+    volumes:
+      - ./asound.conf:/etc/asound.conf:ro
+      - music:/tmp/music
+    depends_on:
+      - streamer
+    restart: unless-stopped
+
+volumes:
+  music:
